@@ -31,14 +31,16 @@ jobs:
       - name: Install dependencies with vcpkg
         shell: pwsh
         run: |
-          & "${{ env.VCPKG_ROOT }}/vcpkg.exe" install --triplet=x64-windows \
-            qt6:x64-windows \
-            "poppler[qt6,cpp]:x64-windows" \
-            qpdf:x64-windows \
-            tesseract:x64-windows \
-            leptonica:x64-windows \
-            nlohmann-json:x64-windows \
-            spdlog:x64-windows
+          $packages = @(
+            "qt6:x64-windows"
+            "poppler[qt6,cpp]:x64-windows"
+            "qpdf:x64-windows"
+            "tesseract:x64-windows"
+            "leptonica:x64-windows"
+            "nlohmann-json:x64-windows"
+            "spdlog:x64-windows"
+          )
+          & "${{ env.VCPKG_ROOT }}/vcpkg.exe" install --triplet=x64-windows @packages
 
       - name: Setup Qt
         uses: jurplel/install-qt-action@v4
