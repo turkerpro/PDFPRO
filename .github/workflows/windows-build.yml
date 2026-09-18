@@ -24,10 +24,9 @@ jobs:
           submodules: recursive
 
       - name: Setup vcpkg
-        uses: lukka/get-vcpkg@v11
-        with:
-          vcpkgDirectory: '${{ env.VCPKG_ROOT }}'
-          vcpkgArguments: '--triplet=x64-windows'
+        run: |
+          git clone https://github.com/microsoft/vcpkg.git "${{ env.VCPKG_ROOT }}"
+          & "${{ env.VCPKG_ROOT }}/bootstrap-vcpkg.bat"
 
       - name: Install dependencies with vcpkg
         shell: pwsh
@@ -116,6 +115,7 @@ jobs:
 
       - name: Configure CMake
         run: |
+          rm -rf build
           cmake -B build -S . -DCMAKE_BUILD_TYPE=Release -G Ninja
 
       - name: Build
