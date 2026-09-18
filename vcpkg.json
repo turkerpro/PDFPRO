@@ -1,0 +1,40 @@
+{
+  "name": "pdfpro",
+  "version": "0.1.0",
+  "description": "PDF Professional - Acrobat Pro alternative",
+  "homepage": "https://github.com/turker/pdfpro",
+  "license": "MIT",
+  "dependencies": [
+    {
+      "name": "qt6",
+      "version>=": "6.10.0",
+      "features": ["core", "gui", "widgets", "qml", "quick", "network", "dbus", "svg", "test", "charts", "webengine", "webenginecore", "webenginewidgets"]
+    },
+    {
+      "name": "poppler",
+      "version>=": "26.01.0",
+      "features": ["qt6", "cpp", "glib"]
+    },
+    {
+      "name": "qpdf",
+      "version>=": "12.3.0"
+    },
+    {
+      "name": "tesseract",
+      "version>=": "5.5.0"
+    },
+    {
+      "name": "leptonica",
+      "version>=": "1.85.0"
+    },
+    "nlohmann-json",
+    "spdlog"
+  ],
+  "builtin-baseline": "2024.01.15",
+  "overrides": [
+    {
+      "name": "qt6",
+      "version": "6.10.2"
+    }
+  ]
+}

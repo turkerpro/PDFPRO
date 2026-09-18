@@ -1,0 +1,11 @@
+-rootPath
+/home/turker/PDFPRO/src/ui
+-cmake-output
+-output-file
+/home/turker/PDFPRO/build/src/ui/.qt/qml_imports/pdfpro_build.cmake
+-importPath
+/home/turker/PDFPRO/build/src/ui
+-importPath
+/usr/lib/x86_64-linux-gnu/qt6/qml
+-qrcFiles
+/home/turker/PDFPRO/build/src/ui/.qt/rcc/PREFIX.qrc

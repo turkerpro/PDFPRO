@@ -1,0 +1,150 @@
+name: Windows Build & Release
+
+on:
+  push:
+    branches: [main, develop]
+    tags: ['v*']
+  pull_request:
+    branches: [main]
+
+env:
+  VCPKG_ROOT: ${{ github.workspace }}/vcpkg
+  VCPKG_DEFAULT_TRIPLET: x64-windows
+  QT_VERSION: 6.10.2
+
+jobs:
+  build:
+    runs-on: windows-latest
+    timeout-minutes: 60
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Setup vcpkg
+        uses: lukka/get-vcpkg@v11
+        with:
+          vcpkgDirectory: '${{ env.VCPKG_ROOT }}'
+          vcpkgGitCommitId: 'd8c8b0b0c8b8b8b8b8b8b8b8b8b8b8b8b8b8b8b8'
+          vcpkgArguments: '--triplet=x64-windows'
+
+      - name: Install dependencies with vcpkg
+        shell: pwsh
+        run: |
+          & "${{ env.VCPKG_ROOT }}/vcpkg.exe" install --triplet=x64-windows \
+            qt6:x64-windows \
+            poppler[qt6,cpp,glib]:x64-windows \
+            qpdf:x64-windows \
+            tesseract:x64-windows \
+            leptonica:x64-windows \
+            nlohmann-json:x64-windows \
+            spdlog:x64-windows
+
+      - name: Setup Qt
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: ${{ env.QT_VERSION }}
+          target: desktop
+          host: windows
+          arch: win64_msvc2022_64
+          modules: qtcharts qtwebengine
+          cache: true
+
+      - name: Configure CMake
+        shell: pwsh
+        run: |
+          $env:VCPKG_ROOT = "${{ env.VCPKG_ROOT }}"
+          $env:CMAKE_TOOLCHAIN_FILE = "$env:VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake"
+          cmake -B build -S . `
+            -DCMAKE_TOOLCHAIN_FILE="$env:CMAKE_TOOLCHAIN_FILE" `
+            -DCMAKE_BUILD_TYPE=Release `
+            -DVCPKG_TARGET_TRIPLET=x64-windows `
+            -G "Visual Studio 17 2022" `
+            -A x64
+
+      - name: Build
+        shell: pwsh
+        run: |
+          cmake --build build --config Release --parallel
+
+      - name: Run Tests
+        shell: pwsh
+        run: |
+          cd build
+          ctest -C Release --output-on-failure --parallel 4
+
+      - name: Package (NSIS)
+        shell: pwsh
+        run: |
+          cmake --build build --config Release --target package
+
+      - name: Upload NSIS Installer
+        uses: actions/upload-artifact@v4
+        with:
+          name: pdfpro-windows-installer
+          path: build/*.exe
+          retention-days: 7
+
+      - name: Create MSIX (for Store)
+        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+        shell: pwsh
+        run: |
+          # Requires Windows SDK and AppxPackaging tools
+          # This is a placeholder - actual MSIX creation needs more setup
+          echo "MSIX packaging would run here for tagged releases"
+
+  # Linux build for cross-platform verification
+  linux-build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            qt6-base-dev qt6-declarative-dev qt6-quickcontrols2-dev \
+            libpoppler-qt6-dev libpoppler-cpp-dev libpoppler-glib-dev \
+            libqpdf-dev \
+            libtesseract-dev libleptonica-dev \
+            nlohmann-json3-dev libspdlog-dev \
+            cmake ninja-build
+
+      - name: Configure CMake
+        run: |
+          cmake -B build -S . -DCMAKE_BUILD_TYPE=Release -G Ninja
+
+      - name: Build
+        run: |
+          cmake --build build --parallel
+
+      - name: Run Tests
+        run: |
+          cd build && ctest --output-on-failure
+
+  release:
+    needs: [build, linux-build]
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Download Windows Installer
+        uses: actions/download-artifact@v4
+        with:
+          name: pdfpro-windows-installer
+          path: release/
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: release/*.exe
+          generate_release_notes: true
+          draft: false
+          prerelease: false

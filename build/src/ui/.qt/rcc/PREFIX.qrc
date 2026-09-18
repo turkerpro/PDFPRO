@@ -1,0 +1,20 @@
+<RCC>
+  <qresource prefix="/">
+    <file alias="MainWindow.qml">/home/turker/PDFPRO/resources/qml/MainWindow.qml</file>
+    <file alias="ToolBar.qml">/home/turker/PDFPRO/resources/qml/ToolBar.qml</file>
+    <file alias="ContextBar.qml">/home/turker/PDFPRO/resources/qml/ContextBar.qml</file>
+    <file alias="SearchBar.qml">/home/turker/PDFPRO/resources/qml/SearchBar.qml</file>
+    <file alias="Sidebar.qml">/home/turker/PDFPRO/resources/qml/Sidebar.qml</file>
+    <file alias="ThumbnailStrip.qml">/home/turker/PDFPRO/resources/qml/ThumbnailStrip.qml</file>
+    <file alias="BookmarksPanel.qml">/home/turker/PDFPRO/resources/qml/BookmarksPanel.qml</file>
+    <file alias="AnnotationsPanel.qml">/home/turker/PDFPRO/resources/qml/AnnotationsPanel.qml</file>
+    <file alias="SearchResultsPanel.qml">/home/turker/PDFPRO/resources/qml/SearchResultsPanel.qml</file>
+    <file alias="PDFViewer.qml">/home/turker/PDFPRO/resources/qml/PDFViewer.qml</file>
+    <file alias="Viewport.qml">/home/turker/PDFPRO/resources/qml/Viewport.qml</file>
+    <file alias="PageView.qml">/home/turker/PDFPRO/resources/qml/PageView.qml</file>
+    <file alias="SelectionLayer.qml">/home/turker/PDFPRO/resources/qml/SelectionLayer.qml</file>
+    <file alias="StatusBar.qml">/home/turker/PDFPRO/resources/qml/StatusBar.qml</file>
+    <file alias="CommandPalette.qml">/home/turker/PDFPRO/resources/qml/CommandPalette.qml</file>
+  </qresource>
+</RCC>
+

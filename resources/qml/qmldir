@@ -1,0 +1,20 @@
+module pdfpro.ui
+
+// Main window
+MainWindow 1.0 MainWindow.qml
+
+// UI components
+ToolBar 1.0 ToolBar.qml
+ContextBar 1.0 ContextBar.qml
+SearchBar 1.0 SearchBar.qml
+Sidebar 1.0 Sidebar.qml
+ThumbnailStrip 1.0 ThumbnailStrip.qml
+BookmarksPanel 1.0 BookmarksPanel.qml
+AnnotationsPanel 1.0 AnnotationsPanel.qml
+SearchResultsPanel 1.0 SearchResultsPanel.qml
+PDFViewer 1.0 PDFViewer.qml
+Viewport 1.0 Viewport.qml
+PageView 1.0 PageView.qml
+SelectionLayer 1.0 SelectionLayer.qml
+StatusBar 1.0 StatusBar.qml
+CommandPalette 1.0 CommandPalette.qml

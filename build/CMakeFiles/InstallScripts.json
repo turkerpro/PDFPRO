@@ -1,0 +1,9 @@
+{
+	"InstallScripts" : 
+	[
+		"/home/turker/PDFPRO/build/cmake_install.cmake",
+		"/home/turker/PDFPRO/build/src/core/cmake_install.cmake",
+		"/home/turker/PDFPRO/build/src/ui/cmake_install.cmake"
+	],
+	"Parallel" : false
+}
