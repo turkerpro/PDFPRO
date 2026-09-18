@@ -108,7 +108,6 @@ jobs:
           version: ${{ env.QT_VERSION }}
           target: desktop
           host: linux
-          arch: gcc_64
           modules: qtcharts qtwebengine
           cache: true
 

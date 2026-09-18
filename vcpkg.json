@@ -13,7 +13,7 @@
     {
       "name": "poppler",
       "version>=": "26.01.0",
-      "features": ["qt6", "cpp", "glib"]
+      "features": ["qt6", "cpp"]
     },
     {
       "name": "qpdf",
@@ -30,7 +30,7 @@
     "nlohmann-json",
     "spdlog"
   ],
-  "builtin-baseline": "2024.01.15",
+  "builtin-baseline": "e6f9e70a29a3e80a1fc510d8503304315447112f",
   "overrides": [
     {
       "name": "qt6",
