@@ -5,11 +5,7 @@
   "homepage": "https://github.com/turker/pdfpro",
   "license": "MIT",
   "dependencies": [
-    {
-      "name": "qt6",
-      "version>=": "6.10.0",
-      "features": ["core", "gui", "widgets", "qml", "quick", "network", "dbus", "svg", "test", "charts", "webengine", "webenginecore", "webenginewidgets"]
-    },
+    "qt6",
     {
       "name": "poppler",
       "version>=": "26.01.0",
@@ -19,22 +15,10 @@
       "name": "qpdf",
       "version>=": "12.3.0"
     },
-    {
-      "name": "tesseract",
-      "version>=": "5.5.0"
-    },
-    {
-      "name": "leptonica",
-      "version>=": "1.85.0"
-    },
+    "tesseract",
+    "leptonica",
     "nlohmann-json",
     "spdlog"
   ],
-  "builtin-baseline": "e6f9e70a29a3e80a1fc510d8503304315447112f",
-  "overrides": [
-    {
-      "name": "qt6",
-      "version": "6.10.2"
-    }
-  ]
+  "builtin-baseline": "e6f9e70a29a3e80a1fc510d8503304315447112f"
 }
