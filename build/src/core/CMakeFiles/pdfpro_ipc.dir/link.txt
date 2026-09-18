@@ -1,2 +1,0 @@
-/usr/bin/ar qc ../../lib/libpdfpro_ipc.a CMakeFiles/pdfpro_ipc.dir/pdfpro_ipc_autogen/mocs_compilation.cpp.o CMakeFiles/pdfpro_ipc.dir/ipc/IpcTransport.cpp.o
-/usr/bin/ranlib ../../lib/libpdfpro_ipc.a

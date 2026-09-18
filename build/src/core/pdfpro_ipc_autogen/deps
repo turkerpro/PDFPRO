@@ -1,6 +1,0 @@
-pdfpro_ipc_autogen/timestamp: \
-	/home/turker/PDFPRO/src/core/CMakeLists.txt \
-	/home/turker/PDFPRO/src/core/ipc/IpcProtocol.h \
-	/home/turker/PDFPRO/src/core/ipc/IpcTransport.cpp \
-	/home/turker/PDFPRO/src/core/ipc/IpcTransport.h \
-	/usr/bin/cmake
