@@ -24,10 +24,9 @@ jobs:
           submodules: recursive
 
       - name: Setup vcpkg
-        uses: lukka/get-vcpkg@v11
+        uses: lukka/get-vcpkg@v11.5.0
         with:
           vcpkgDirectory: '${{ env.VCPKG_ROOT }}'
-          vcpkgGitCommitId: 'd8c8b0b0c8b8b8b8b8b8b8b8b8b8b8b8b8b8b8b8'
           vcpkgArguments: '--triplet=x64-windows'
 
       - name: Install dependencies with vcpkg
@@ -35,7 +34,7 @@ jobs:
         run: |
           & "${{ env.VCPKG_ROOT }}/vcpkg.exe" install --triplet=x64-windows \
             qt6:x64-windows \
-            poppler[qt6,cpp,glib]:x64-windows \
+            poppler[qt6,cpp]:x64-windows \
             qpdf:x64-windows \
             tesseract:x64-windows \
             leptonica:x64-windows \
@@ -43,7 +42,7 @@ jobs:
             spdlog:x64-windows
 
       - name: Setup Qt
-        uses: jurplel/install-qt-action@v3
+        uses: jurplel/install-qt-action@v4
         with:
           version: ${{ env.QT_VERSION }}
           target: desktop
@@ -97,7 +96,7 @@ jobs:
 
   # Linux build for cross-platform verification
   linux-build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 45
 
     steps:
@@ -130,7 +129,7 @@ jobs:
   release:
     needs: [build, linux-build]
     if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       contents: write
 
@@ -142,7 +141,7 @@ jobs:
           path: release/
 
       - name: Create Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           files: release/*.exe
           generate_release_notes: true
