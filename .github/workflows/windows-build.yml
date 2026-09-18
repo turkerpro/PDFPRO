@@ -33,7 +33,7 @@ jobs:
         run: |
           & "${{ env.VCPKG_ROOT }}/vcpkg.exe" install --triplet=x64-windows \
             qt6:x64-windows \
-            poppler[qt6,cpp]:x64-windows \
+            "poppler[qt6,cpp]:x64-windows" \
             qpdf:x64-windows \
             tesseract:x64-windows \
             leptonica:x64-windows \
@@ -89,28 +89,34 @@ jobs:
         if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
         shell: pwsh
         run: |
-          # Requires Windows SDK and AppxPackaging tools
-          # This is a placeholder - actual MSIX creation needs more setup
           echo "MSIX packaging would run here for tagged releases"
 
   # Linux build for cross-platform verification
   linux-build:
     runs-on: ubuntu-24.04
-    timeout-minutes: 45
+    timeout-minutes: 60
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Setup Qt (6.10+)
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: ${{ env.QT_VERSION }}
+          target: desktop
+          host: linux
+          arch: gcc_64
+          modules: qtcharts qtwebengine
+          cache: true
+
       - name: Install dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y \
-            qt6-base-dev qt6-declarative-dev \
             libpoppler-qt6-dev libpoppler-cpp-dev libpoppler-glib-dev \
             libqpdf-dev \
             libtesseract-dev libleptonica-dev \
-            nlohmann-json3-dev libspdlog-dev \
             cmake ninja-build
 
       - name: Configure CMake
