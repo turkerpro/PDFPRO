@@ -31,8 +31,8 @@ jobs:
       - name: Install dependencies with vcpkg
         shell: pwsh
         run: |
-          # Manifest mode: vcpkg.json'dan otomatik kurar, paket argümanı verilmez
-          & "${{ env.VCPKG_ROOT }}/vcpkg.exe" install --triplet=x64-windows
+          # Classic mode: manifest'i bypass et, qt6 jurplel/install-qt-action'dan geliyor
+          & "${{ env.VCPKG_ROOT }}/vcpkg.exe" install --classic --triplet=x64-windows poppler qpdf tesseract leptonica nlohmann-json spdlog
 
       - name: Setup Qt
         uses: jurplel/install-qt-action@v4
