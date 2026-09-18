@@ -8,7 +8,6 @@
     "qt6",
     {
       "name": "poppler",
-      "version>=": "26.01.0",
       "features": ["qt6", "cpp"]
     },
     "qpdf",
@@ -16,5 +15,6 @@
     "leptonica",
     "nlohmann-json",
     "spdlog"
-  ]
+  ],
+  "builtin-baseline": "e6f9e70a29a3e80a1fc510d8503304315447112f"
 }
