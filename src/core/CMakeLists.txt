@@ -51,8 +51,8 @@ else()
     message(WARNING "Skipping Poppler engine build - Poppler not found")
 endif()
 
-# QPDF Engine (separate process) - optional (handle different target names: qpdf::qpdf vs qpdf::libqpdf vs PkgConfig)
-if(qpdf_FOUND)
+# QPDF Engine (separate process) - only on Windows (Linux apt libqpdf API mismatched for Sprint 1)
+if(qpdf_FOUND AND WIN32)
     add_executable(pdfpro-qpdf-engine
         qpdf/QpdfEngine.cpp
         qpdf/main.cpp
@@ -71,7 +71,6 @@ if(qpdf_FOUND)
         target_link_libraries(pdfpro-qpdf-engine PRIVATE pdfpro_ipc ${QPDF_LIBRARIES} Qt6::Core)
         target_include_directories(pdfpro-qpdf-engine PRIVATE ${QPDF_INCLUDE_DIRS})
     else()
-        # Fallback: try pkg-config
         find_package(PkgConfig QUIET)
         if(PkgConfig_FOUND)
             pkg_check_modules(QPDF_PKG libqpdf)
@@ -93,7 +92,11 @@ if(qpdf_FOUND)
         RUNTIME DESTINATION bin
     )
 else()
-    message(WARNING "Skipping Qpdf engine build - qpdf not found")
+    if(WIN32)
+        message(WARNING "Skipping Qpdf engine build - qpdf not found")
+    else()
+        message(STATUS "Skipping Qpdf engine build - disabled on Linux for Sprint 1 (API mismatch, Windows target)")
+    endif()
 endif()
 
 # Combined core library for UI
